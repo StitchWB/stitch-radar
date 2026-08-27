@@ -1,0 +1,63 @@
+{
+  "schema": "stitch.plugin/v2",
+  "id": "stitch-radar",
+  "name": "Stitch Radar",
+  "version": "0.1.0",
+  "service": "radar",
+  "kind": "service",
+  "engine": {
+    "min": "0.3.0",
+    "api": 2
+  },
+  "depends": [],
+  "entry": {
+    "module": "stitch_radar"
+  },
+  "capabilities": [],
+  "outputs": [],
+  "signature": "",
+  "contributions": {
+    "commands": [
+      {
+        "name": "get_radar_offers",
+        "readonly": true
+      },
+      {
+        "name": "get_radar_stats",
+        "readonly": true
+      }
+    ],
+    "ui": {
+      "kind": "core_page",
+      "tabs": [
+        {
+          "id": "radar",
+          "label": "stitch-radar.tab",
+          "icon": "Radar",
+          "page": "main"
+        }
+      ]
+    },
+    "i18n": {
+      "ru": {
+        "stitch-radar": {
+          "title": "AiApiRadar",
+          "tab": "Радар"
+        }
+      },
+      "en": {
+        "stitch-radar": {
+          "title": "AiApiRadar",
+          "tab": "Radar"
+        }
+      }
+    },
+    "storage": {
+      "sqlite": false
+    }
+  },
+  "generated_by": {
+    "tool": "stitch_plugin_tools",
+    "scaffold": 3
+  }
+}
