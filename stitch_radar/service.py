@@ -32,7 +32,7 @@ _RADAR_CACHE_TTL: float = 120.0
 _RADAR_TIMEOUT: float = 10.0
 
 #: Default upstream URL (same as core ``config.airadadar_api_url``).
-_DEFAULT_API_URL = "https://api.aiapiradar.cf.whitebite.ru"
+_DEFAULT_API_URL = "https://aiapiradar.whitebite.ru"
 
 # Lazily-created singleton HTTP client (sync).  Reused across calls to avoid
 # paying the connection-pool / TLS handshake cost on every request.
@@ -153,3 +153,19 @@ def fetch_radar_offers(params: dict[str, Any]) -> dict:
 def fetch_radar_stats() -> dict:
     """Proxy ``GET /api/stats`` with TTL cache (no params)."""
     return _fetch_cached(("stats",), "/api/stats", {})
+
+
+def warm_cache() -> None:
+    """Pre-fetch stats + default offers so the first request hits the cache.
+
+    Called from the plugin's init handler (daemon thread — the handshake
+    must not block on the upstream).  Failures only leave the cache cold.
+    """
+    for fetch in (
+        lambda: fetch_radar_offers({"limit": 500}),
+        fetch_radar_stats,
+    ):
+        try:
+            fetch()
+        except Exception:  # noqa: BLE001 — warmup must never surface
+            pass

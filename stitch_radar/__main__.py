@@ -20,6 +20,7 @@ when the plugin is installed and healthy.
 
 from __future__ import annotations
 
+import threading
 from typing import Any
 
 from . import service
@@ -47,6 +48,12 @@ def _handle_init(params: dict[str, Any]) -> dict[str, Any]:
     """Store handshake params and return them as the init result."""
     ctx.db_path = str(params.get("db_path", ""))
     ctx.data_dir = str(params.get("data_dir", ""))
+    # Prewarm the radar cache in the background — the init handshake must
+    # return immediately (the host has a startup timeout), and the plugin
+    # is single-threaded per request.
+    threading.Thread(
+        target=service.warm_cache, daemon=True, name="radar-cache-warmup"
+    ).start()
     return {
         "plugin_id": params.get("plugin_id", ""),
         "db_path": ctx.db_path,
