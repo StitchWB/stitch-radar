@@ -59,5 +59,59 @@
   "generated_by": {
     "tool": "stitch_plugin_tools",
     "scaffold": 3
-  }
+  },
+  "description": {
+    "ru": "Проксирует API AiApiRadar: список офферов с фильтрами и статистику использования. Кэширует ответы на 120 секунд, прогревает кэш при старте и добавляет вкладку «Радар».",
+    "en": "Proxies the AiApiRadar API: offer list with filters and usage statistics. Caches responses for 120 seconds, prewarms the cache on startup and adds a Radar tab."
+  },
+  "author": "WhiteBite",
+  "category": "data",
+  "status": "beta",
+  "icon": "📡",
+  "features": [
+    {
+      "title": {
+        "ru": "Список офферов AiApiRadar с валидацией фильтров (sort, effort, status, поиск)",
+        "en": "AiApiRadar offer list with validated filters (sort, effort, status, search)"
+      },
+      "status": "stable"
+    },
+    {
+      "title": {
+        "ru": "Статистика использования AiApiRadar",
+        "en": "AiApiRadar usage statistics"
+      },
+      "status": "stable"
+    },
+    {
+      "title": {
+        "ru": "TTL-кэш 120 с с прогревом при инициализации плагина",
+        "en": "120 s TTL cache with warmup on plugin init"
+      },
+      "status": "stable"
+    },
+    {
+      "title": {
+        "ru": "Вкладка «Радар» на главной странице",
+        "en": "Radar tab on the main page"
+      },
+      "status": "stable"
+    }
+  ],
+  "changelog": [
+    {
+      "version": "0.1.0",
+      "date": "2026-08-22",
+      "changes": [
+        {
+          "ru": "Команды get_radar_offers и get_radar_stats",
+          "en": "get_radar_offers and get_radar_stats commands"
+        },
+        {
+          "ru": "HTTP-прокси к AiApiRadar с TTL-кэшем и прогревом",
+          "en": "HTTP proxy to AiApiRadar with TTL cache and warmup"
+        }
+      ]
+    }
+  ]
 }
